@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>A Special Surprise for My Favorite Person 💜</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --purple-dark: #1a0a33;
+            --purple-main: #673ab7;
+            --lilac: #E6E6FA;
+            --sh-1: #4a148c;
+            --sh-2: #7b1fa2;
+            --sh-3: #9c27b0;
+            --sh-4: #ba68c8;
+        }
+
+        body {
+            margin: 0;
+            background: radial-gradient(circle, var(--purple-main), var(--purple-dark));
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+
+        /* --- STICKERS (Swaying Enabled) --- */
+        .side-border {
+            position: fixed; bottom: 40px; width: 130px; z-index: 500; pointer-events: none;
+        }
+        .left { left: 10px; } 
+        .right { right: 10px; }
+        .side-sticker { 
+            width: 100%; display: block; filter: drop-shadow(8px 12px 20px rgba(0,0,0,0.5)); 
+            animation: stickerSway 5s ease-in-out infinite; transform-origin: center bottom;
+        }
+        .right .side-sticker { animation-delay: -2.5s; }
+
+        @keyframes stickerSway {
+            0%, 100% { transform: translateY(0) rotate(-6deg); }
+            50% { transform: translateY(-35px) rotate(6deg); }
+        }
+
+        /* --- DANGLING HEARTS (High Density) --- */
+        .dangling-hearts-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 50; pointer-events: none; }
+        .dangle { position: absolute; top: 0; display: flex; flex-direction: column; align-items: center; transform-origin: top; animation: heartSway 4s ease-in-out infinite alternate; }
+        .dangle-string { width: 1px; background: linear-gradient(to bottom, rgba(255,255,255,0.3), rgba(255,255,255,0.05)); }
+        .dangle-heart { font-size: 1.5rem; margin-top: -5px; animation: shimmer 3s infinite ease-in-out; }
+        
+        @keyframes heartSway { from { transform: rotate(-3deg); } to { transform: rotate(3deg); } }
+        @keyframes shimmer { 0%, 100% { filter: drop-shadow(0 0 5px rgba(0,0,0,0.3)); transform: scale(1); } 50% { filter: drop-shadow(0 0 10px rgba(255,255,255,0.6)) brightness(1.2); transform: scale(1.1); } }
+
+        /* --- ENVELOPE & LETTER --- */
+        .envelope-wrapper {
+            position: relative; width: min(320px, 90vw); height: 200px; background: var(--purple-main); border-radius: 0 0 15px 15px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5); cursor: pointer; z-index: 400; transition: transform 0.8s; -webkit-tap-highlight-color: transparent;
+        }
+        .flap {
+            position: absolute; top: 0; width: 100%; height: 100%; background: var(--purple-main); clip-path: polygon(0 0, 50% 60%, 100% 0);
+            -webkit-clip-path: polygon(0 0, 50% 60%, 100% 0); transform-origin: top; transition: transform 0.6s 0.2s; z-index: 4;
+        }
+        .letter {
+            position: absolute; top: 5px; left: 2.5%; width: 95%; height: 90%; background: var(--lilac); padding: 20px 15px; box-sizing: border-box;
+            transition: all 0.8s 0.5s; z-index: 1; border-radius: 10px; overflow-y: auto; font-family: 'Caveat', cursive; color: #1a0a33;
+            font-size: 1.25rem; line-height: 1.5; -webkit-overflow-scrolling: touch;
+        }
+        .photo-frame { background: white; padding: 8px 8px 20px 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transform: rotate(-2deg); margin: 0 auto 15px auto; width: fit-content; }
+        .couple-photo { width: 160px; display: block; }
+        
+        .envelope-wrapper.open { transform: translateY(20vh); }
+        .envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 0; }
+        .envelope-wrapper.open .letter { transform: translateY(-55vh); height: 75vh; z-index: 600; }
+        
+        /* OTHERS */
+        .bunting-container { position: fixed; top: 0; left: 0; width: 100vw; height: 150px; z-index: 300; pointer-events: none; }
+        .string-line { fill: none; stroke: rgba(255,255,255,0.4); stroke-width: 2; }
+        .flag { width: 30px; height: 45px; clip-path: polygon(0% 0%, 100% 0%, 50% 100%); -webkit-clip-path: polygon(0% 0%, 100% 0%, 50% 100%); transform-origin: top center; animation: flagSway 4s ease-in-out infinite alternate; }
+        .flag-0 { background: var(--sh-1); } .flag-1 { background: var(--sh-2); } .flag-2 { background: var(--sh-3); } .flag-3 { background: var(--sh-4); }
+        .hint-text { position: absolute; bottom: -60px; width: 100%; color: white; text-align: center; font-family: 'Dancing Script', cursive; font-size: 1.4rem; }
+        .falling { position: fixed; top: -10vh; z-index: 1000; animation: fall linear forwards; pointer-events: none;}
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+        @media (min-width: 768px) { .side-border { width: 220px; } .letter { font-size: 1.5rem; } }
+    </style>
+</head>
+<body>
+
+    <div class="bunting-container">
+        <svg class="bunting-svg" width="100%" height="100%" viewBox="0 0 1000 400" preserveAspectRatio="none">
+            <path id="unifiedCurve" class="string-line" d="M0,20 Q250,220 500,20 Q750,220 1000,20" />
+        </svg>
+    </div>
+
+    <div id="danglingContainer" class="dangling-hearts-container"></div>
+
+    <audio id="loveSong" loop preload="auto">
+        <source src="LANY - ILYSB (Official Lyric Video).mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="side-border left"><img src="Dog!.png" class="side-sticker" alt="Dog"></div>
+    <div class="side-border right"><img src="FORYOU!.png" class="side-sticker" alt="For You"></div>
+
+    <div class="envelope-wrapper" id="envelope">
+        <div class="flap"></div>
+        <div class="letter">
+            <h1 style="text-align: center; font-family: 'Dancing Script'; font-size: 2.2rem; margin-top: 0;">My Valentine...</h1>
+            <div class="photo-frame">
+                <img src="crizzlly.jpg.jpg" class="couple-photo" alt="Us">
+                <div style="text-align: center; margin-top: 5px; font-size: 0.8rem; color: #888;">Forever & Always</div>
+            </div>
+            
+            <p>I’ve been sitting here trying to find the right words to tell you how much you mean to me, but honestly, no matter what I say, it feels like it barely scratches the surface. I just wanted to make sure you know deep down that I am thinking of you every single second.</p>
+            
+            <p>You are, without a doubt in my mind, the most beautiful girl I have ever met. But it’s not just the way you look (even though you still take my breath away every time I see you😉); it’s your heart. The way you care, the way you love, and the person you are when no one else is watching, that’s what makes me the luckiest person alive.</p>
+            
+            <p>Being with you has changed my life in ways I can’t even describe. You make everything feel worth it. Even on my hardest days, I can talk about how I feel with you without feeling scared to open up.</p>
+            
+            <p>I’ll be honest with you, sometimes I get scared. I get scared because I’ve never had something this precious before, and the thought of losing you is the only thing that truly terrifies me. It’s why I get so scared and cry when we argue. Those moments when we aren't on the same page are the hardest for me because all I ever want is to be close to you. I hate the distance that our arguments create, even if we're in the same room, because you are my safe place.</p>
+            
+            <p>I am so incredibly grateful for you. For your patience, for your laugh, and for the way you choose me every day. I love you more than I could ever put into a text or a letter, and I can't wait for every moment we have ahead of us. You’re my everything.</p>
+            
+            <p style="text-align: center; font-family: 'Dancing Script'; font-size: 1.8rem; margin-bottom: 5px;">Happy Valentine's Day Baby,</p>
+            <p style="text-align: center; font-family: 'Dancing Script'; font-size: 1.8rem; margin-top: 0;">I can't wait for the day we get married <3</p>
+        </div>
+        <div class="hint-text" id="hint">I love you baby<br>TAP TO OPEN 🎁</div>
+    </div>
+
+    <script>
+        function createDanglingHearts() {
+            const container = document.getElementById('danglingContainer');
+            const heartsTotal = 25; 
+            const colors = ['#E6E6FA', '#D8BFD8', '#BA68C8', '#9C27B0', '#7B1FA2'];
+            for (let i = 0; i < heartsTotal; i++) {
+                const randomX = Math.random() * 95;
+                const dangle = document.createElement('div');
+                dangle.className = 'dangle';
+                dangle.style.left = `${randomX}vw`;
+                dangle.style.animationDelay = `${Math.random() * -5}s`;
+                const randomHeight = 80 + Math.random() * 350; 
+                dangle.innerHTML = `<div class="dangle-string" style="height: ${randomHeight}px;"></div>
+                                    <div class="dangle-heart" style="color: ${colors[Math.floor(Math.random()*colors.length)]};">💜</div>`;
+                container.appendChild(dangle);
+            }
+        }
+
+        const path = document.getElementById('unifiedCurve');
+        const svg = document.querySelector('.bunting-svg');
+        const pathLength = path.getTotalLength();
+        for (let i = 0; i < 12; i++) {
+            const point = path.getPointAtLength((pathLength / 11) * i);
+            const fo = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
+            fo.setAttribute("x", point.x - 15); fo.setAttribute("y", point.y);
+            fo.setAttribute("width", "30"); fo.setAttribute("height", "60");
+            const flag = document.createElement("div");
+            flag.className = `flag flag-${i % 4}`;
+            fo.appendChild(flag);
+            svg.appendChild(fo);
+        }
+
+        createDanglingHearts();
+
+        const envelope = document.getElementById('envelope');
+        const audio = document.getElementById('loveSong');
+        let isOpen = false;
+
+        envelope.addEventListener('click', function() {
+            if (!isOpen) {
+                audio.play().catch(e => console.log("Audio play blocked"));
+                envelope.classList.add('open');
+                document.getElementById('hint').style.display = 'none';
+                isOpen = true;
+                setInterval(() => {
+                    const f = document.createElement('div');
+                    f.className = 'falling';
+                    f.innerHTML = ['🌹', '🌸', '💜'][Math.floor(Math.random() * 3)];
+                    f.style.left = Math.random() * 100 + 'vw';
+                    f.style.animationDuration = Math.random() * 3 + 3 + 's';
+                    document.body.appendChild(f);
+                    setTimeout(() => f.remove(), 5000);
+                }, 400);
+            }
+        });
+    </script>
+</body>
+</html>
