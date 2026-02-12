@@ -75,7 +75,6 @@
         .envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 0; }
         .envelope-wrapper.open .letter { transform: translateY(-55vh); height: 75vh; z-index: 600; }
         
-        /* OTHERS */
         .bunting-container { position: fixed; top: 0; left: 0; width: 100vw; height: 150px; z-index: 300; pointer-events: none; }
         .string-line { fill: none; stroke: rgba(255,255,255,0.4); stroke-width: 2; }
         .flag { width: 30px; height: 45px; clip-path: polygon(0% 0%, 100% 0%, 50% 100%); -webkit-clip-path: polygon(0% 0%, 100% 0%, 50% 100%); transform-origin: top center; animation: flagSway 4s ease-in-out infinite alternate; }
@@ -114,7 +113,7 @@
             
             <p>I’ve been sitting here trying to find the right words to tell you how much you mean to me, but honestly, no matter what I say, it feels like it barely scratches the surface. I just wanted to make sure you know deep down that I am thinking of you every single second.</p>
             
-            <p>You are, without a doubt in my mind, the most beautiful girl I have ever met. But it’s not just the way you look (even though you still take my breath away every time I see you😉); it’s your heart. The way you care, the way you love, and the person you are when no one else is watching, that’s what makes me the luckiest person alive.</p>
+            <p>You are, without a doubt in my mind, the most beautiful girl I have ever met. But it’s not just the way you look; it’s your heart. The way you care, the way you love, and the person you are when no one else is watching, that’s what makes me the luckiest person alive.</p>
             
             <p>Being with you has changed my life in ways I can’t even describe. You make everything feel worth it. Even on my hardest days, I can talk about how I feel with you without feeling scared to open up.</p>
             
@@ -168,12 +167,8 @@
 
         envelope.addEventListener('click', function() {
             if (!isOpen) {
-                // Force play when the user interacts
-                audio.play().then(() => {
-                    console.log("Music started!");
-                }).catch(e => {
-                    console.log("Audio failed. Check if music.mp3 exists exactly.");
-                });
+                // FORCE PLAY
+                audio.play().then(() => { console.log("Success"); }).catch(e => { console.log("Blocked:", e); });
                 
                 envelope.classList.add('open');
                 document.getElementById('hint').style.display = 'none';
