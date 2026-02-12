@@ -28,7 +28,7 @@
             touch-action: manipulation;
         }
 
-        /* --- STICKERS (Swaying Enabled) --- */
+        /* --- STICKERS --- */
         .side-border {
             position: fixed; bottom: 40px; width: 130px; z-index: 500; pointer-events: none;
         }
@@ -45,7 +45,7 @@
             50% { transform: translateY(-35px) rotate(6deg); }
         }
 
-        /* --- DANGLING HEARTS (High Density) --- */
+        /* --- DANGLING HEARTS --- */
         .dangling-hearts-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 50; pointer-events: none; }
         .dangle { position: absolute; top: 0; display: flex; flex-direction: column; align-items: center; transform-origin: top; animation: heartSway 4s ease-in-out infinite alternate; }
         .dangle-string { width: 1px; background: linear-gradient(to bottom, rgba(255,255,255,0.3), rgba(255,255,255,0.05)); }
@@ -97,7 +97,7 @@
     <div id="danglingContainer" class="dangling-hearts-container"></div>
 
     <audio id="loveSong" loop preload="auto">
-        <source src="LANY - ILYSB (Official Lyric Video).mp3" type="audio/mpeg">
+        <source src="music.mp3" type="audio/mpeg">
     </audio>
 
     <div class="side-border left"><img src="Dog!.png" class="side-sticker" alt="Dog"></div>
@@ -168,7 +168,13 @@
 
         envelope.addEventListener('click', function() {
             if (!isOpen) {
-                audio.play().catch(e => console.log("Audio play blocked"));
+                // Force play when the user interacts
+                audio.play().then(() => {
+                    console.log("Music started!");
+                }).catch(e => {
+                    console.log("Audio failed. Check if music.mp3 exists exactly.");
+                });
+                
                 envelope.classList.add('open');
                 document.getElementById('hint').style.display = 'none';
                 isOpen = true;
